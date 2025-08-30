@@ -14,13 +14,10 @@ int main() {
             return 0;  // Exit program
         } else {
             attempts++;
-            if (attempts < 3) {
                 printf("Password is invalid\n");
                 printf("You have %d attempts left\n", 3 - attempts);
-            }
         }
     }
-
     printf("Your account is blocked\n");
     return 0;
 }
