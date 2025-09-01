@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int intPow(int base, int exp) {
+int Pow(int base, int exp) {
     int result = 1;
     for (int i = 0; i < exp; i++) {
         result *= base;
@@ -27,7 +27,7 @@ int main() {
 
     while (test > 0) {
         rm = test % 10;
-        sum += intPow(rm, power);
+        sum += Pow(rm, power);
         test = test / 10;
     }
 
@@ -41,3 +41,4 @@ int main() {
 
     return 0;
 }
+
