@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 typedef struct {
     int rollNumber;
     char name[50];
@@ -46,17 +45,17 @@ void showMaxScore(Student s[]) {
         printf("No student records available.\n");
         return;
     }
-    Student maxStudent = s[0];
+    int maxIndex = 0;
     for (int i = 1; i < count; i++) {
-        if (s[i].score > maxStudent.score) {
-            maxStudent = s[i];
+        if (s[i].score > s[maxIndex].score) {
+            maxIndex = i;
         }
     }
     printf("\nStudent with Maximum Score:\n");
-    printf("Roll Number: %d\n", maxStudent.rollNumber);
-    printf("Name: %s\n", maxStudent.name);
-    printf("Sex: %s\n", maxStudent.sex);
-    printf("Score: %.2f\n", maxStudent.score);
+    printf("Roll Number: %d\n", s[maxIndex].rollNumber);
+    printf("Name: %s\n", s[maxIndex].name);
+    printf("Sex: %s\n", s[maxIndex].sex);
+    printf("Score: %.2f\n", s[maxIndex].score);
 }
 
 void showMinScore(Student s[]) {
@@ -64,20 +63,17 @@ void showMinScore(Student s[]) {
         printf("No student records available.\n");
         return;
     }
-
-    Student minStudent = s[0];
-
+    int minIndex = 0;
     for (int i = 1; i < count; i++) {
-        if (s[i].score < minStudent.score) {
-            minStudent = s[i];
+        if (s[i].score < s[minIndex].score) {
+            minIndex = i;
         }
     }
-
     printf("\nStudent with Minimum Score:\n");
-    printf("Roll Number: %d\n", minStudent.rollNumber);
-    printf("Name: %s\n", minStudent.name);
-    printf("Sex: %s\n", minStudent.sex);
-    printf("Score: %.2f\n", minStudent.score);
+    printf("Roll Number: %d\n", s[minIndex].rollNumber);
+    printf("Name: %s\n", s[minIndex].name);
+    printf("Sex: %s\n", s[minIndex].sex);
+    printf("Score: %.2f\n", s[minIndex].score);
 }
 
 int main() {
