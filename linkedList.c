@@ -7,6 +7,7 @@ void insertEnd(int n);
 void insertAfetr(int n,int s);
 int deleteFirst();
 int deleteLast();
+int deleteSpec(int s);
 
 struct node {
 	int data;
@@ -145,4 +146,35 @@ int deleteLast() {
         }
     }
     return x;
+}
+
+int deleteSpec(int s) {
+    struct node *temp, *current;
+
+    if (start == NULL) {
+        printf("List is empty\n");
+        return 0;
+    }
+
+    if (start->data == s) {
+        temp = start;
+        start = start->next;
+        free(temp);
+        return 1;
+    }
+
+    current = start;
+    while (current->next != NULL && current->next->data != s) {
+        current = current->next;
+    }
+
+    if (current->next == NULL) {
+        printf("Element not found in the list\n");
+        return 0;
+    }
+
+    temp = current->next;
+    current->next = temp->next;
+    free(temp);
+    return 1;
 }
