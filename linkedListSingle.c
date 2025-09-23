@@ -3,29 +3,28 @@
 
 struct node {
 	int data;
-    struct node *prev;
 	struct node *next;
 }*start;
 
 void insertBeg(int n);
 void travelForward();
 void insertEnd(int n);
-void insertBefore(int n,int s);
+void insertAfetr(int n,int s);
 int deleteFirst();
 int deleteLast();
 void deleteSpec(int s);
+void reverseList();
+void funPrint(struct node *current);
 void travelBack();
+void insertBefore(int n,int s);
 
 int main(){
 	//start = (struct node*)malloc(sizeof(struct node));
     start = NULL;
     insertBeg(8);
-    insertBeg(17);
-    insertBeg(8);
-    insertEnd(25);
+    insertEnd(17);
+    insertBefore(8,17);
     travelForward();
-    printf("\n");
-    travelBack();
 }
 
 void insertBeg(int n){
@@ -33,13 +32,11 @@ void insertBeg(int n){
     temp = (struct node*)malloc(sizeof(struct node));
     temp->data = n;
     temp->next = NULL;
-    temp->prev = NULL;
     if(start == NULL)
         start = temp;
     else
     {
         temp->next = start;
-        start->prev = temp;
         start = temp;
     }
 
@@ -66,7 +63,6 @@ void insertEnd(int n){
     temp = (struct node*)malloc(sizeof(struct node));
     temp->data = n;
     temp->next = NULL;
-    temp->prev = NULL;
     if(start == NULL)
     {
         start = temp;
@@ -79,47 +75,34 @@ void insertEnd(int n){
             current = current->next;
         }
         current->next = temp;
-        temp->prev = current;
     }
 }
 
-void insertBefore(int n, int s) {
-    struct node *temp, *current;
-    if (start == NULL) {
-        printf("List is empty\n");
-        return;
-    }
-    if (start->data == s)
-    {
-        insertBeg(n);
-        return;
-    }
+void insertAfetr(int n,int s){
+    struct  node *temp,*current;
+    if(start==NULL)
+        printf("List is empty");
     else
     {
         temp = (struct node*)malloc(sizeof(struct node));
         temp->data = n;
         temp->next = NULL;
-        temp->prev = NULL;
         current = start;
-        while(current->next != NULL && current->next->data != s)
+        while(current!=NULL && current->data!=s)
         {
             current = current->next;
         }
-
-        if(current->next != NULL) 
+        if(current!=NULL)
         {
             temp->next = current->next;
-            temp->prev = current;
-            current->next->prev = temp;
             current->next = temp;
-        } 
-        else 
-        {
-            printf("Element not found\n");
-            free(temp); 
         }
-    }
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        else
+        {
+            printf("Element not found");
+        }
+    } //outer ifelse
+}// function
 
 int deleteFirst(){
     int x = -1;
@@ -152,7 +135,7 @@ int deleteLast() {
             temp = NULL;
         } else {
             current = start;
-            while(current->next->next != NULL) {
+            while (current->next->next != NULL) {
                 current = current->next;
             }
             temp = current->next;
@@ -161,10 +144,9 @@ int deleteLast() {
             free(temp);
             temp = NULL;
         }
-    } //outer if else
+    }
     return x;
-}//function
-
+}
 void deleteSpec(int s){
     struct node *temp,*current;
     if(start == NULL)
@@ -197,21 +179,81 @@ void deleteSpec(int s){
     }
 }
 
-void travelBack() {
-    struct node* current;
-    if (start == NULL) {
-        printf("List is empty\n");
-        return;
+void reverseList(){
+    struct node *temp,*rev;
+    rev = NULL;
+    while(start!=NULL)
+    {
+        temp = start;
+        start = temp->next;
+        temp->next = rev;
+        rev = temp;
     }
-
+    start = rev;
+    /*struct node *current;
     current = start;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-
-    while (current != NULL) {
-        printf("%d ", current->data);
-        current = current->prev;
-    }
-    printf("\n");
+    if(start == NULL)
+        printf("List is empty");
+    else
+    {
+        while(current!=NULL)
+        {
+            printf("%d ",current->data);
+            current = current->next;
+        }
+    }*/
 }
+void travelBack(){
+    if(start == NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        funPrint(start);
+    }
+}
+
+void funPrint(struct node *current){
+    if(current->next!=NULL)
+    {
+        funPrint(current->next);
+    }
+    printf("%d ",current->data);
+}
+
+void insertBefore(int n,int s){
+    struct node *temp,*current;
+    if(start == NULL)
+        printf("List is empty");
+    else
+    {
+        temp = (struct node*)malloc(sizeof(struct node));
+        temp->data = n;
+        temp->next = NULL;
+        if(start->data == s)
+        {
+            temp->next = start;
+            start = temp;
+        }
+        else
+        {
+            current = start;
+            while(current->next != NULL && current->next->data != s)
+            {
+                current = current->next;
+            }
+            if(current->next != NULL)
+            {
+                temp->next = current->next;
+                current->next = temp;
+            }
+            else
+            {
+                printf("Element not found");
+                free(temp);  // free temp since we didn't insert it
+            }
+        }
+    }
+}
+
